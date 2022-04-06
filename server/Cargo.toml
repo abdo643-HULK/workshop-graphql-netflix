@@ -1,0 +1,19 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+cassandra-cpp = "1.1.0"
+chrono = "0.4"
+clap = { version = "3.1.6", features = ["derive", "env"] }
+futures = "0.3"
+futures-util = "0.3"
+rustls = "0.20.4"
+rustls-pemfile = "0.3.0"
+serde = { version = "1.0.136", features = ["derive"] }
+serde_json = "1.0.79"
+tokio = { version = "1", features = ["full"] }

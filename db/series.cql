@@ -1,66 +1,66 @@
 CREATE KEYSPACE series WITH REPLICATION = { 
-    'class': 'SimpleStrategy',
-    'replication_factor': 2 
+	'class': 'SimpleStrategy',
+	'replication_factor': 2 
 };
 
 use series;
 
 CREATE TYPE DELIVERY (
-    3D BOOLEAN,
-    51Audio BOOLEAN,
-    DolbyAtmos BOOLEAN,
-    DolbyVision BOOLEAN,
-    HD BOOLEAN,
-    HDR BOOLEAN,
-    UltraHD BOOLEAN,
-    quality TEXT,
+	3D BOOLEAN,
+	51Audio BOOLEAN,
+	DolbyAtmos BOOLEAN,
+	DolbyVision BOOLEAN,
+	HD BOOLEAN,
+	HDR BOOLEAN,
+	UltraHD BOOLEAN,
+	quality TEXT,
 )
 
 CREATE TABLE metadata (
-    movieId BIGINT,
+	movieId BIGINT,
 
-    releaseYear SMALLINT,
-    delivery DELIVERY,
+	releaseYear SMALLINT,
+	delivery DELIVERY,
 
-    PRIMARY KEY (movieId)
+	PRIMARY KEY (movieId)
 );
 
 CREATE TABLE details (
-    movieId BIGINT,
+	movieId BIGINT,
 
-    synopsis TEXT,
+	synopsis TEXT,
 
-    PRIMARY KEY (movieId)
+	PRIMARY KEY (movieId)
 );
 
 CREATE TABLE cast (
-    movieId BIGINT,
-    actorId BIGINT,
+	movieId BIGINT,
+	actorId BIGINT,
 
-    PRIMARY KEY (movieId)
+	PRIMARY KEY (movieId)
 );
 
 CREATE TABLE season (
-    seasonId TINYINT,
-    
-    name TEXT,
-    shortName TEXT,
-    length TINYINT,
+	seasonId TINYINT,
+	
+	name TEXT,
+	shortName TEXT,
+	length TINYINT,
 
-    timestamp BIGINT,
-    PRIMARY KEY (seasonId)
+	timestamp BIGINT,
+	PRIMARY KEY (seasonId)
 );
 
 CREATE TABLE episode (
-    seasonId TINYINT,
-    episodeId TINYINT,
+	seasonId TINYINT,
+	episodeId TINYINT,
 
-    title TEXT,
-    synopsis TEXT,
+	title TEXT,
+	synopsis TEXT,
 
-    name TEXT,
-    timestamp BIGINT,
-    PRIMARY KEY (movieId)
+	name TEXT,
+	timestamp BIGINT,
+	PRIMARY KEY (movieId)
 );
 
 
