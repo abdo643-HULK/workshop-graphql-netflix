@@ -6,15 +6,21 @@ CREATE KEYSPACE actors WITH REPLICATION = {
 use actors;
 
 CREATE TABLE series (
+    actorId UUID,
 	seriesId UUID,
+
 	name varchar(50),
 	timestamp bigint,
 
-	PRIMARY KEY (seriesId)
+	PRIMARY KEY (actorId, seriesId)
 );
 
 CREATE TABLE movies (
+    actorId UUID,
 	movieId UUID,
 
-	PRIMARY KEY (movieId)
+    name varchar(50),
+	timestamp bigint,
+
+	PRIMARY KEY (actorId, movieId)
 );
