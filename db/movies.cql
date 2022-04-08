@@ -1,11 +1,11 @@
-CREATE KEYSPACE movie WITH REPLICATION = { 
+CREATE KEYSPACE IF NOT EXISTS movie WITH REPLICATION = { 
 	'class': 'SimpleStrategy',
 	'replication_factor': 2 
 };
 
 use movie;
 
-CREATE TYPE MATURITYRATING (
+CREATE TYPE IF NOT EXISTS MATURITYRATING (
     board TEXT,
     board_id INT,
     maturity_description TEXT,
@@ -16,14 +16,14 @@ CREATE TYPE MATURITYRATING (
     value TEXT,
 );
 
-CREATE TYPE METADATA (
+CREATE TYPE IF NOT EXISTS METADATA (
 	release_year SMALLINT,
 	duration BIGINT,
 	genres SET<TEXT>,
 	maturity_rating frozen<MATURITYRATING>,--TINYINT,
 );
 
-CREATE TYPE BOXART (
+CREATE TYPE IF NOT EXISTS BOXART (
 	extension TEXT,
     image_key TEXT,
     is_smoky BOOLEAN,
@@ -34,7 +34,7 @@ CREATE TYPE BOXART (
     video_id UUID,
 );
 
-CREATE TYPE DELIVERY (
+CREATE TYPE IF NOT EXISTS DELIVERY (
 	is_3D BOOLEAN,
 	is_51Audio BOOLEAN,
 	is_dolby_atmos BOOLEAN,
@@ -45,39 +45,31 @@ CREATE TYPE DELIVERY (
 	quality TEXT,
 );
 
-CREATE TYPE SYNOPSIS (
-	info_density_synopsis TEXT,
-    narrative TEXT,
-    regular_synopsis TEXT,
-    short_synopsis TEXT,
-    videoId UUID,
-);
-
-CREATE TYPE AVAILABILITY (
+CREATE TYPE IF NOT EXISTS AVAILABILITY (
     is_playable BOOLEAN,
 	availability_date TEXT,
     availability_start_time BIGINT,
 );
 
-CREATE TYPE HIGHTLIGHTIMAGE(
+CREATE TYPE IF NOT EXISTS HIGHTLIGHTIMAGE(
     image_key TEXT,
     url TEXT,
     width SMALLINT,
     height SMALLINT,
 );
 
-CREATE TYPE TRAILER (
+CREATE TYPE IF NOT EXISTS TRAILER (
 	title TEXT,
     track_id BIGINT,
     highlight frozen<HIGHTLIGHTIMAGE>,
 );
 
-CREATE TYPE ACTOR (
+CREATE TYPE IF NOT EXISTS ACTOR (
     id UUID,
     name TEXT,
 );
 
-CREATE TYPE RELATEDMOVIE (
+CREATE TYPE IF NOT EXISTS RELATEDMOVIE (
     id UUID,
 
     is_original BOOLEAN,
@@ -88,13 +80,13 @@ CREATE TYPE RELATEDMOVIE (
 );
 
 -- Columns
-CREATE TABLE movies (
+CREATE TABLE IF NOT EXISTS movies (
     id UUID PRIMARY KEY,
 
     is_original BOOLEAN,
     title TEXT,
     box_art frozen<BOXART>,
-    synopsis frozen<SYNOPSIS>,
+    synopsis TEXT,
 
     metadata frozen<METADATA>,
     available_deliveries frozen<DELIVERY>, 
@@ -109,7 +101,7 @@ CREATE TABLE movies (
     related LIST<frozen<RELATEDMOVIE>>,
 );
 
-CREATE TABLE movies_by_genre (
+CREATE TABLE IF NOT EXISTS movies_by_genre (
 	movie_id UUID,
 
     genre TEXT,
@@ -121,7 +113,7 @@ CREATE TABLE movies_by_genre (
     PRIMARY KEY (genre, movie_id)
 ) WITH CLUSTERING ORDER BY (movie_id DESC);
 
-CREATE TABLE movies_by_actor (
+CREATE TABLE IF NOT EXISTS movies_by_actor (
     movie_id UUID,
 
     actor_id UUID,

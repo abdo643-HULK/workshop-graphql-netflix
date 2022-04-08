@@ -24,7 +24,6 @@ mod queries {
     pub fn insert_into_movies(schema_meta: &SchemaMeta, uuid: Uuid, movie: &Movie) -> Statement {
         let key_space = schema_meta.get_keyspace_by_name("movie");
         let meta_data_type = key_space.user_type_by_name("metadata").unwrap();
-        let synopsis_type = key_space.user_type_by_name("synopsis").unwrap();
 
         let Movie {
             duration,
@@ -41,24 +40,7 @@ mod queries {
         statement.bind_uuid(0, movie_id).unwrap();
         statement.bind_string(1, title.as_str()).unwrap();
         statement.bind_bool(2, false).unwrap();
-
-        let synopsis_str = synopsis.as_str();
-        let mut synopsis = synopsis_type.new_user_type();
-        synopsis.set_uuid_by_name("video_id", movie_id).unwrap();
-        synopsis
-            .set_string_by_name("narrative", synopsis_str)
-            .unwrap();
-        synopsis
-            .set_string_by_name("info_density_synopsis", synopsis_str)
-            .unwrap();
-        synopsis
-            .set_string_by_name("regular_synopsis", synopsis_str)
-            .unwrap();
-        synopsis
-            .set_string_by_name("short_synopsis", synopsis_str)
-            .unwrap();
-
-        statement.bind_user_type(3, &synopsis).unwrap();
+        statement.bind_string(3, synopsis.as_str()).unwrap();
 
         let mut meta_data = meta_data_type.new_user_type();
         meta_data
